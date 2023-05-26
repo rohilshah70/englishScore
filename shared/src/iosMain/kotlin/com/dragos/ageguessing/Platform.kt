@@ -7,3 +7,7 @@ class IOSPlatform: Platform {
 }
 
 actual fun getPlatform(): Platform = IOSPlatform()
+
+actual fun getAge(age: Int): Int{
+    return if (age < 7) age + 10 else age
+}

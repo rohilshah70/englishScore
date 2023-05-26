@@ -46,7 +46,8 @@ class NetworkManager {
                 if (ageResponse.name == null || ageResponse.age == null) {
                     Result.failure(Error("Invalid response format"))
                 } else {
-                    Result.success(AgeDetails(ageResponse.name, ageResponse.age.toInt()))
+                    val age = getAge(ageResponse.age.toInt())
+                    Result.success(AgeDetails(ageResponse.name, age))
                 }
             }
         } catch (e: ResponseException) {

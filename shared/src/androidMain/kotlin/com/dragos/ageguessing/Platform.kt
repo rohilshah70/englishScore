@@ -5,3 +5,7 @@ class AndroidPlatform : Platform {
 }
 
 actual fun getPlatform(): Platform = AndroidPlatform()
+
+actual fun getAge(age: Int): Int{
+    return if (age < 7) age + 5 else age
+}
