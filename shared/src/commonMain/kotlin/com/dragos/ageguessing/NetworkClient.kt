@@ -39,12 +39,13 @@ class NetworkManager {
             val response: String = client.get(request).body()
 
             if (response == "null") {
-                Result.failure(Error("Age cannot be determined"))
+                Result.success(AgeDetails("", 0))
+//                Result.failure(Error("Age cannot be determined"))
             } else {
-
                 val ageResponse = json.decodeFromString<AgeResponse>(response)
                 if (ageResponse.name == null || ageResponse.age == null) {
-                    Result.failure(Error("Invalid response format"))
+                    Result.success(AgeDetails("", 0))
+//                    Result.failure(Error("Invalid response format"))
                 } else {
                     val age = getAge(ageResponse.age.toInt())
                     Result.success(AgeDetails(ageResponse.name, age))
