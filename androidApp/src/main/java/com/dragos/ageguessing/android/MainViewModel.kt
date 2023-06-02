@@ -9,13 +9,6 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-/*
-* @created 01/06/23 - 6:17 PM
-* @project Zoomcar
-* @author Rohil
-* Copyright (c) 2022 Zoomcar. All rights reserved.
-*/
-
 class MainViewModel : ViewModel() {
 
     private val _uiState = MutableStateFlow(AgingState())

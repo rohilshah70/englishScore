@@ -18,12 +18,11 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import nl.dionsegijn.konfetti.core.Party
-import nl.dionsegijn.konfetti.core.emitter.Emitter
+import com.dragos.ageguessing.android.confetti.ConfettiView
 import java.util.*
-import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
 class MainActivity : ComponentActivity() {
@@ -51,9 +50,6 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Party(
-                        emitter = Emitter(duration = 10, TimeUnit.SECONDS).perSecond(60)
-                    )
                     Column(
                         modifier = Modifier.padding(4.dp),
                         verticalArrangement = Arrangement.spacedBy(20.dp)
@@ -80,9 +76,21 @@ class MainActivity : ComponentActivity() {
                             Text(text = it.toString())
                         }
 
-                        if (uiState.value.showError){
+                        if (uiState.value.showError) {
                             Text(text = "uhh ohh, we couldn't detect your age")
                         }
+                    }
+
+                    uiState.value.age?.let {
+                        ConfettiView(
+                            imageList = getConfettiImageList(this),
+                            colorList = listOf(
+                                Color.Red,
+                                Color.Blue,
+                                Color.Yellow,
+                                Color.Green
+                            )
+                        )
                     }
                 }
             }
