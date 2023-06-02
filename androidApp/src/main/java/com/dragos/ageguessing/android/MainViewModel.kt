@@ -45,6 +45,5 @@ class MainViewModel : ViewModel() {
 
 data class AgingState(
     val age: Int? = null,
-    val showLoader: Boolean = false,
     val showError: Boolean = false
 )

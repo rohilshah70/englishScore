@@ -7,20 +7,21 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.dragos.ageguessing.android.confetti.ConfettiView
 import java.util.*
 import kotlin.collections.ArrayList
@@ -52,7 +53,8 @@ class MainActivity : ComponentActivity() {
                 ) {
                     Column(
                         modifier = Modifier.padding(4.dp),
-                        verticalArrangement = Arrangement.spacedBy(20.dp)
+                        verticalArrangement = Arrangement.spacedBy(20.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
 
                         Button(onClick = {
@@ -69,11 +71,7 @@ class MainActivity : ComponentActivity() {
                             intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak to text")
                             speechLauncher.launch(intent)
                         }) {
-                            Text(text = "Hit me for an API call")
-                        }
-
-                        uiState.value.age?.let {
-                            Text(text = it.toString())
+                            Text(text = "Hit me to say something")
                         }
 
                         if (uiState.value.showError) {
@@ -82,15 +80,43 @@ class MainActivity : ComponentActivity() {
                     }
 
                     uiState.value.age?.let {
-                        ConfettiView(
-                            imageList = getConfettiImageList(this),
-                            colorList = listOf(
-                                Color.Red,
-                                Color.Blue,
-                                Color.Yellow,
-                                Color.Green
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Column(
+                                modifier = Modifier.padding(4.dp),
+                                verticalArrangement = Arrangement.spacedBy(10.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Text(
+                                    text = "Your calculated age is",
+                                    style = TextStyle(
+                                        fontSize = 14.sp
+                                    ),
+                                    textAlign = TextAlign.Center
+                                )
+
+                                Text(
+                                    text = it.toString(),
+                                    style = TextStyle(
+                                        fontSize = 30.sp
+                                    ),
+                                    textAlign = TextAlign.Center
+                                )
+                            }
+
+                            ConfettiView(
+                                imageList = getConfettiImageList(this@MainActivity),
+                                colorList = listOf(
+                                    Color.Red,
+                                    Color.Blue,
+                                    Color.Yellow,
+                                    Color.Green
+                                )
                             )
-                        )
+                        }
                     }
                 }
             }

@@ -149,7 +149,7 @@ fun SnowFall(
         force = Force.Gravity(0.4f),
         acceleration = Acceleration(),
         lifeTime = LifeTime(255f, 0.01f),
-        emissionType = EmissionType.FlowEmission(maxParticlesCount = 100, emissionRate = 1f),
+        emissionType = EmissionType.FlowEmission(maxParticlesCount = 200, emissionRate = 1f),
         durationMillis = 3 * 1000,
         imageList = imageList,
         colorList = colorList
