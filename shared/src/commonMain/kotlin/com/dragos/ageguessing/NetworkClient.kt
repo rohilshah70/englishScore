@@ -30,7 +30,7 @@ class NetworkManager {
         ignoreUnknownKeys = true
     }
 
-    suspend fun getAge(name: String): Result<AgeDetails> {
+    suspend fun getAge(name: String): AgeDetails? {
         return try {
             val request = request {
                 url("https://api.agify.io/")
@@ -39,22 +39,24 @@ class NetworkManager {
             val response: String = client.get(request).body()
 
             if (response == "null") {
-                Result.success(AgeDetails("", 0))
-//                Result.failure(Error("Age cannot be determined"))
+                println(Error("Age cannot be determined"))
+                null
             } else {
                 val ageResponse = json.decodeFromString<AgeResponse>(response)
                 if (ageResponse.name == null || ageResponse.age == null) {
-                    Result.success(AgeDetails("", 0))
-//                    Result.failure(Error("Invalid response format"))
+                    println(Error("Invalid response format"))
+                    null
                 } else {
                     val age = getAge(ageResponse.age.toInt())
-                    Result.success(AgeDetails(ageResponse.name, age))
+                    AgeDetails(ageResponse.name, age)
                 }
             }
         } catch (e: ResponseException) {
-            Result.failure(Error("HTTP error: ${e.response.status.value}"))
+            println(Error("HTTP error: ${e.response.status.value}"))
+            null
         } catch (e: Exception) {
-            Result.failure(Error("Unknown error: ${e.message}"))
+            println(Error("Unknown error: ${e.message}"))
+            null
         }
     }
 }

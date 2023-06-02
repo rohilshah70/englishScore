@@ -79,6 +79,10 @@ class MainActivity : ComponentActivity() {
                         uiState.value.age?.let {
                             Text(text = it.toString())
                         }
+
+                        if (uiState.value.showError){
+                            Text(text = "uhh ohh, we couldn't detect your age")
+                        }
                     }
                 }
             }

@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.flow
 class GetAgeInteractor {
     private val networkManager: NetworkManager = NetworkManager()
 
-    fun getAge(name: String): Flow<AgeDetails> = flow {
-        emit(networkManager.getAge(name).getOrThrow())
-    }
+    suspend fun getAge(name: String): AgeDetails? = networkManager.getAge(name)
+
 }

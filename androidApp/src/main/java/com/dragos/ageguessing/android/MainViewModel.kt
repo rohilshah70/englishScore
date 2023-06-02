@@ -26,23 +26,23 @@ class MainViewModel : ViewModel() {
         var age: Int? = null
         val items = speechToText?.split(" ")
         viewModelScope.launch(Dispatchers.IO) {
-            val runningTasks = items?.map {text ->
-                async { // this will allow us to run multiple tasks in parallel
-                    val apiResponse = GetAgeInteractor().getAge(text).first()
-                    // associate id and response for later
+            val runningTasks = items?.map { text ->
+                async {
+                    val apiResponse = GetAgeInteractor().getAge(text)
                     text to apiResponse
                 }
             }
             val responses = runningTasks?.awaitAll()
             responses?.forEach { (id, response) ->
-                if (response.name != "") {
-                    age = response.age
+                response?.let {
+                    age = it.age
                 }
             }
 
             _uiState.update { currentState ->
                 currentState.copy(
-                    age = age
+                    age = age,
+                    showError = age == null
                 )
             }
         }
