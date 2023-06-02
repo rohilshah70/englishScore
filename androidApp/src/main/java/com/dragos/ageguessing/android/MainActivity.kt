@@ -107,15 +107,17 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
 
-                            ConfettiView(
-                                imageList = getConfettiImageList(this@MainActivity),
-                                colorList = listOf(
-                                    Color.Red,
-                                    Color.Blue,
-                                    Color.Yellow,
-                                    Color.Green
+                            if (uiState.value.showConfetti) {
+                                ConfettiView(
+                                    imageList = getConfettiImageList(this@MainActivity),
+                                    colorList = listOf(
+                                        Color.Red,
+                                        Color.Blue,
+                                        Color.Yellow,
+                                        Color.Green
+                                    )
                                 )
-                            )
+                            }
                         }
                     }
                 }

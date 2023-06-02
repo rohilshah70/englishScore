@@ -3,11 +3,8 @@ package com.dragos.ageguessing.android
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dragos.ageguessing.GetAgeInteractor
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
 
@@ -21,7 +18,7 @@ class MainViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             val runningTasks = items?.map { text ->
                 async {
-                    val apiResponse = GetAgeInteractor().getAge(text)
+                    val apiResponse = GetAgeInteractor().getAge(text).first()
                     text to apiResponse
                 }
             }
@@ -35,9 +32,17 @@ class MainViewModel : ViewModel() {
             _uiState.update { currentState ->
                 currentState.copy(
                     age = age,
-                    showError = age == null
+                    showError = age == null,
+                    showConfetti = true
                 )
             }
+            delay(5000)
+            _uiState.update { currentState ->
+                currentState.copy(
+                    showConfetti = false
+                )
+            }
+
         }
     }
 
@@ -45,5 +50,6 @@ class MainViewModel : ViewModel() {
 
 data class AgingState(
     val age: Int? = null,
-    val showError: Boolean = false
+    val showError: Boolean = false,
+    val showConfetti: Boolean = false,
 )
