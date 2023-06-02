@@ -23,7 +23,7 @@ class MainViewModel : ViewModel() {
                 }
             }
             val responses = runningTasks?.awaitAll()
-            responses?.forEach { (id, response) ->
+            responses?.forEach { (_, response) ->
                 response?.let {
                     age = it.age
                 }
